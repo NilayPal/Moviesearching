@@ -33,7 +33,7 @@ const SingleMovie = () => {
           </NavLink>
         </div>
       </div>
-    // </section>
+   
   );
 };
 
