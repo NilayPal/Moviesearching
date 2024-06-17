@@ -9,21 +9,28 @@ const SingleMovie = () => {
 
   if (isLoading) {
     return (
-      <section className="movie-section ">
-        <div className="loading">Loading....</div>;
+      <section className="movie-section">
+        <div className="loading">Loading....</div>
+      </section>
+    );
+  }
+
+  if (isError || !movie) {
+    return (
+      <section className="movie-section">
+        <div className="error">Error loading movie data...</div>
       </section>
     );
   }
 
   return (
-    // <section className="movie-section">
+    <section className="movie-section">
       <div className="movie-card">
         <figure>
-          <img src={movie.Poster} alt="" />
+          <img src={movie.Poster} alt={movie.Title} />
         </figure>
         <div className="card-content">
           <p className="title">{movie.Title}</p>
-          <p className=""></p>
           <p className="card-text">{movie.Released}</p>
           <p className="card-text">{movie.Genre}</p>
           <p className="card-text">{movie.imdbRating} / 10</p>
@@ -33,7 +40,7 @@ const SingleMovie = () => {
           </NavLink>
         </div>
       </div>
-   
+    </section>
   );
 };
 
