@@ -1,11 +1,16 @@
+import React from "react";
 import { NavLink, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 
 const SingleMovie = () => {
   const { id } = useParams();
-  console.log(id);
+  console.log("Movie ID:", id);
 
   const { isLoading, movie, isError } = useFetch(`&i=${id}`);
+
+  console.log("Loading:", isLoading);
+  console.log("Movie Data:", movie);
+  console.log("Error:", isError);
 
   if (isLoading) {
     return (
@@ -24,7 +29,7 @@ const SingleMovie = () => {
   }
 
   return (
-    <section className="movie-section">
+   
       <div className="movie-card">
         <figure>
           <img src={movie.Poster} alt={movie.Title} />
@@ -40,7 +45,7 @@ const SingleMovie = () => {
           </NavLink>
         </div>
       </div>
-    </section>
+  
   );
 };
 

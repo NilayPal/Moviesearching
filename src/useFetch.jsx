@@ -1,35 +1,42 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-const API_URL = `http://www.omdbapi.com/?apikey=${import.meta.env.VITE_REACT_APP_API_KEY}`;
+const API_URL = `https://www.omdbapi.com/?apikey=${import.meta.env.VITE_REACT_APP_API_KEY}`;
 
-const useFetch = (query) => {
+const useFetch = (apiParams) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [movie, setMovie] = useState(null);
-  const [isError, setIsError] = useState({ show: false, msg: "" });
 
-  const fetchMovie = async (url) => {
+  const getMovie = async (url) => {
     setIsLoading(true);
     try {
-      const response = await fetch(url);
-      const data = await response.json();
+      const res = await fetch(url);
+      const data = await res.json();
+
       if (data.Response === "True") {
         setMovie(data);
-        setIsError({ show: false, msg: "" });
+        setIsError(false);
       } else {
-        setIsError({ show: true, msg: data.Error });
+        setIsError(true);
       }
-      setIsLoading(false);
     } catch (error) {
-      setIsError({ show: true, msg: "Something went wrong" });
+      setIsError(true);
+    } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchMovie(`${API_URL}${query}`);
-  }, [query]);
+    let timeOut = setTimeout(() => {
+      getMovie(`${API_URL}&${apiParams}`);
+    }, 1000);
 
-  return { isLoading, movie, isError };
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [apiParams]);
+
+  return { isLoading, isError, movie };
 };
 
 export default useFetch;
