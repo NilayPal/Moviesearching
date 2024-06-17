@@ -97,7 +97,7 @@ input {
 }
 
 .card-error p {
-  color: red;
+  color: rgb(38, 230, 236);
   margin-top: 1rem;
   font-size: 1.8rem;
 }
